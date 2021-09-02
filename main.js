@@ -1,3 +1,5 @@
+document.getElementById('result0').style.display = 'none';
+
 // load all data function
 const loadData = () => {
     const userSearch = document.getElementById('search-box');
@@ -7,20 +9,20 @@ const loadData = () => {
         .then(res => res.json())
         .then(data => loadDetails(data.docs))
     userSearch.value = '';
+
 }
 
 const loadDetails = allBooks => {
     const searchSection = document.getElementById('search-section');
     const displayBook = document.getElementById('display-book');
 
-    // error message if no book found
+    // error message: if no book find
+    document.getElementById('result0').style.display = 'none';
     if (allBooks.length === 0) {
-        const notFound = document.createElement('p');
-        notFound.innerText = 'Did not find a single result';
-        searchSection.appendChild(notFound);
+        document.getElementById('result0').style.display = 'block';
     }
 
-    // error message if user does not input book name
+    // total result message
     if (allBooks.length !== 0) {
         const totalResult = document.createElement('p');
         totalResult.innerText = ` ${allBooks.length} results found!! `;
@@ -32,6 +34,7 @@ const loadDetails = allBooks => {
 
     // single book feature
     allBooks.forEach(singleBook => {
+        console.log(singleBook);
         const div = document.createElement('div');
         div.classList.add('col');
         div.innerHTML = `
@@ -39,6 +42,7 @@ const loadDetails = allBooks => {
             <h5 class="card-title">Book Name: ${singleBook.title}</h5>
             <p class="card-text">Author: ${singleBook.author_name}</p>
             <p class="card-text">First Pusblished: ${singleBook.first_publish_year}</p>
+            <p class="card-text">Pusblisher: ${singleBook.publisher}</p>
             </div>
 
     `;
